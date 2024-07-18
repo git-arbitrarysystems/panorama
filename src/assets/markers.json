@@ -1,0 +1,22 @@
+[
+  {
+    "id": "door1",
+    "position": { "textureX": 2760, "textureY": 2112 },
+    "tooltip": "Left door"
+  },
+  {
+    "id": "door2",
+    "position": { "textureX": 3390, "textureY": 2052 },
+    "tooltip": "Right door"
+  },
+  {
+    "id": "jens",
+    "position": { "textureX": 4982, "textureY": 2457 },
+    "tooltip": "Jens's place"
+  },
+  {
+    "id": "poster",
+    "position": { "textureX": 2136, "textureY": 2108 },
+    "tooltip": "Cool poster"
+  }
+]

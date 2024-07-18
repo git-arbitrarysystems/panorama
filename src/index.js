@@ -1,49 +1,42 @@
-import './styles/main.scss'
-import '@photo-sphere-viewer/core/index.scss'
-import { MarkersPlugin } from '@photo-sphere-viewer/markers-plugin'
-import '@photo-sphere-viewer/markers-plugin/index.scss'
+import "./styles/main.scss";
+import "@photo-sphere-viewer/core/index.css";
+import "@photo-sphere-viewer/markers-plugin/index.css";
 
+import panorama from "./assets/panorama.jpg";
+import markers from "./assets/markers.json";
 
-import panorama from './assets/panorama.jpg'
-console.log('oi', panorama)
+import { MarkersPlugin } from "@photo-sphere-viewer/markers-plugin";
+import { Viewer, events } from "@photo-sphere-viewer/core";
 
-import { Viewer } from '@photo-sphere-viewer/core';
 
 const svgStyle = {
-    fill: 'rgba(200, 0, 0, 0.2)',
-    stroke: 'rgba(200, 0, 50, 0.8)',
-    strokeWidth: '2px'
-}
+  fill: "rgba(255, 0, 0, 0.5)",
+  stroke: "rgba(255, 0, 0, 1)",
+  strokeWidth: "2px",
+};
 
 const viewer = new Viewer({
-    container: document.querySelector('#viewer'),
-    panorama: panorama,
-    plugins:[
-        [MarkersPlugin, {
-            markers:[{
-                 // circle marker
-                 id: 'door1',
-                 circle: 20,
-                 svgStyle,
-                 position: { textureX: 2760, textureY: 2112 },
-                 tooltip: 'Left door',
-            },
-            {
-                // circle marker
-                id: 'door2',
-                circle: 20,
-                svgStyle,
-                position: { textureX: 3390, textureY: 2052 },
-                tooltip: 'Right door',
-           },
-           {
-            // circle marker
-            id: 'jens',
-            circle: 20,
-            svgStyle,
-            position: { textureX: 4982, textureY: 2457 },
-            tooltip: 'Jens\'s place',
-       }]
-        }]
-    ]
+  container: document.querySelector("#viewer"),
+  panorama: panorama,
+  plugins: [
+    [
+      MarkersPlugin,
+      {
+        markers: markers.map((m) => ({ circle: 20, svgStyle, ...m })),
+      },
+    ],
+  ],
 });
+
+
+
+viewer.addEventListener(
+  events.ReadyEvent.type,
+  () => {
+    const markersPlugin = viewer.getPlugin(MarkersPlugin);
+    markersPlugin.gotoMarker("jens").then(() => {
+      markersPlugin.showMarkerTooltip("jens");
+    });
+  },
+  { once: true }
+);
